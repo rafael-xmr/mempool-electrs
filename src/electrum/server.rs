@@ -260,6 +260,19 @@ impl Connection {
         }))
     }
 
+    // fn blockchain_block_tweaks(&self, params: &[Value]) -> Result<Value> {
+    //     let height = usize_from_value(params.get(0), "height")?;
+    //     let hash = self
+    //         .query
+    //         .chain()
+    //         .header_by_height(height)
+    //         .map(|entry| entry.hash())
+    //         .chain_err(|| "missing header")?;
+    //     let tweaks = self.query.chain().get_block_tweaks(hash);
+
+    //     Ok(json!({ "tweaks": tweaks, "height": height, "hash": hash }))
+    // }
+
     fn blockchain_estimatefee(&self, params: &[Value]) -> Result<Value> {
         let conf_target = usize_from_value(params.get(0), "blocks_count")?;
         let fee_rate = self
@@ -423,6 +436,7 @@ impl Connection {
         let result = match method {
             "blockchain.block.header" => self.blockchain_block_header(params),
             "blockchain.block.headers" => self.blockchain_block_headers(params),
+            // "blockchain.block.tweaks" => self.blockchain_block_tweaks(params),
             "blockchain.estimatefee" => self.blockchain_estimatefee(params),
             "blockchain.headers.subscribe" => self.blockchain_headers_subscribe(),
             "blockchain.relayfee" => self.blockchain_relayfee(),
